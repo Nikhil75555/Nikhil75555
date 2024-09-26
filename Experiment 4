@@ -1,0 +1,27 @@
+import pandas as pd
+
+df = pd.read_csv('your_dataset.csv')
+
+print(f"Number of rows: {df.shape[0]}")
+print(f"Number of columns: {df.shape[1]}")
+
+
+print("\nFirst 5 rows of the dataset:")
+print(df.iloc[:5])
+
+print(f"\nSize of the dataset (total elements): {df.size}")
+
+
+missing_values = df.isna().sum().sum()
+print(f"\nTotal number of missing values: {missing_values}")
+
+
+print("\nMissing values per column:")
+print(df.isna().sum())
+print("\nStatistics for numerical columns:")
+for column in df.select_dtypes(include='number').columns:
+    print(f"\nColumn: {column}")
+    print(f"Sum: {df[column].sum()}")
+    print(f"Average (mean): {df[column].mean()}")
+    print(f"Minimum: {df[column].min()}")
+    print(f"Maximum: {df[column].max()}")
