@@ -1,0 +1,48 @@
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('lab_4_dataset.csv')
+
+print("Dataset Info:")
+df.info()  
+
+missing_data = df.isnull().sum()
+print("\nMissing values per column:")
+print(missing_data)
+
+print("\nStatistical Summary (Numerical Columns):")
+print(df.describe())  
+
+
+print("\nCategorical Columns Summary:")
+categorical_cols = df.select_dtypes(include='object').columns
+print(df[categorical_cols].describe())
+print("\nVisualizing distributions of numerical columns:")
+numerical_cols = df.select_dtypes(include=np.number).columns
+df[numerical_cols].hist(figsize=(10, 10), bins=15)
+plt.show()
+
+print("\nCorrelation Matrix:")
+correlation_matrix = df.corr()
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
+plt.show()
+
+
+sns.pairplot(df[numerical_cols])
+plt.show()
+
+
+print("\nBoxplots to detect outliers in numerical columns:")
+for col in numerical_cols:
+    sns.boxplot(df[col])
+    plt.title(f"Boxplot for {col}")
+    plt.show()
+
+print("\nVisualizing categorical column distributions:")
+for col in categorical_cols:
+    sns.countplot(y=col, data=df)
+    plt.title(f"Count plot for {col}")
+    plt.show()
+an
